@@ -13,7 +13,13 @@ namespace WAD.Portfolio._00007417.Models
 
         public string ProductName { get; set; }
 
-        public Category ProductCategory { get; set; }
+        public int? CategoryId { get; set; }
+
+        public virtual Category ProductCategory { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public virtual Person Customer { get; set; }
 
         public string Description { get; set; }
 

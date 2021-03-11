@@ -23,7 +23,7 @@ namespace WAD.Portfolio._00007417.Models
 
         public DateTime DateOfBirth { get; set; }
 
-        public Product Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public string Location { get; set; }
 

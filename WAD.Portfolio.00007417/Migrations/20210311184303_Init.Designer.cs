@@ -10,7 +10,7 @@ using WAD.Portfolio._00007417.DAL;
 namespace WAD.Portfolio._00007417.Migrations
 {
     [DbContext(typeof(CgiProductsDbContext))]
-    [Migration("20210311165040_Init")]
+    [Migration("20210311184303_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace WAD.Portfolio._00007417.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("WAD.Portfolio._00007417.Models.Person", b =>
@@ -61,9 +61,6 @@ namespace WAD.Portfolio._00007417.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProfessionalInformation")
                         .HasColumnType("nvarchar(max)");
 
@@ -72,9 +69,7 @@ namespace WAD.Portfolio._00007417.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("Person");
+                    b.ToTable("People");
                 });
 
             modelBuilder.Entity("WAD.Portfolio._00007417.Models.Product", b =>
@@ -84,37 +79,39 @@ namespace WAD.Portfolio._00007417.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
-
-                    b.Property<int?>("ProductCategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("WAD.Portfolio._00007417.Models.Person", b =>
-                {
-                    b.HasOne("WAD.Portfolio._00007417.Models.Product", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsId");
                 });
 
             modelBuilder.Entity("WAD.Portfolio._00007417.Models.Product", b =>
                 {
                     b.HasOne("WAD.Portfolio._00007417.Models.Category", "ProductCategory")
                         .WithMany()
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("WAD.Portfolio._00007417.Models.Person", "Customer")
+                        .WithMany("Products")
+                        .HasForeignKey("PersonId");
                 });
 #pragma warning restore 612, 618
         }

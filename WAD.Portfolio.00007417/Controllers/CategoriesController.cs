@@ -25,14 +25,14 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            return await _context.Category.ToListAsync();
+            return await _context.Categories.ToListAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
 
             if (category == null)
             {
@@ -80,7 +80,7 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-            _context.Category.Add(category);
+            _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
@@ -90,13 +90,13 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> DeleteCategory(int id)
         {
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            _context.Category.Remove(category);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
             return category;
@@ -104,7 +104,7 @@ namespace WAD.Portfolio._00007417.Controllers
 
         private bool CategoryExists(int id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

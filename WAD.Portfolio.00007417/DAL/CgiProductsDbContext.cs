@@ -17,8 +17,8 @@ namespace WAD.Portfolio._00007417.DAL
 
         public virtual DbSet<Product> Products { get; set; }
 
-        public DbSet<WAD.Portfolio._00007417.Models.Person> Person { get; set; }
+        public virtual DbSet<Person> People { get; set; }
 
-        public DbSet<WAD.Portfolio._00007417.Models.Category> Category { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }
