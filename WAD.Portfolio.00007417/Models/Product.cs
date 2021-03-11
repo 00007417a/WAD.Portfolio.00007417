@@ -19,6 +19,5 @@ namespace WAD.Portfolio._00007417.Models
 
         public float Price { get; set; }
 
-        public List<Object> Images { get; set; }
     }
 }
