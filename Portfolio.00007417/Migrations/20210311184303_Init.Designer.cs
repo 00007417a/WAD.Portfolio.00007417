@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WAD.Portfolio._00007417.DAL;
+using Portfolio._00007417.DAL.Context;
 
-namespace WAD.Portfolio._00007417.Migrations
+namespace Portfolio._00007417.DAL.Migrations
 {
     [DbContext(typeof(CgiProductsDbContext))]
     [Migration("20210311184303_Init")]
@@ -21,7 +21,7 @@ namespace WAD.Portfolio._00007417.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WAD.Portfolio._00007417.Models.Category", b =>
+            modelBuilder.Entity("Portfolio._00007417.DAL.DBO.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace WAD.Portfolio._00007417.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WAD.Portfolio._00007417.Models.Person", b =>
+            modelBuilder.Entity("Portfolio._00007417.DAL.DBO.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +72,7 @@ namespace WAD.Portfolio._00007417.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("WAD.Portfolio._00007417.Models.Product", b =>
+            modelBuilder.Entity("Portfolio._00007417.DAL.DBO.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,13 +103,13 @@ namespace WAD.Portfolio._00007417.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("WAD.Portfolio._00007417.Models.Product", b =>
+            modelBuilder.Entity("Portfolio._00007417.DAL.DBO.Product", b =>
                 {
-                    b.HasOne("WAD.Portfolio._00007417.Models.Category", "ProductCategory")
+                    b.HasOne("Portfolio._00007417.DAL.DBO.Category", "ProductCategory")
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("WAD.Portfolio._00007417.Models.Person", "Customer")
+                    b.HasOne("Portfolio._00007417.DAL.DBO.Person", "Person")
                         .WithMany("Products")
                         .HasForeignKey("PersonId");
                 });

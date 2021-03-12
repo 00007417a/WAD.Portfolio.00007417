@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WAD.Portfolio._00007417.Models;
+using Portfolio._00007417.DAL.DBO;
 
-namespace WAD.Portfolio._00007417.DAL
+namespace Portfolio._00007417.DAL.Context
 {
     public class CgiProductsDbContext : DbContext
     {

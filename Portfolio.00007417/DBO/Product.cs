@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WAD.Portfolio._00007417.Models
+namespace Portfolio._00007417.DAL.DBO
 {
     public class Product
     {
-        [Required]
+        
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(2)]
         public string ProductName { get; set; }
 
         public int? CategoryId { get; set; }
@@ -19,10 +21,13 @@ namespace WAD.Portfolio._00007417.Models
 
         public int? PersonId { get; set; }
 
-        public virtual Person Customer { get; set; }
+        public virtual Person Person { get; set; }
 
+        [Required]
+        [MinLength(3)]
         public string Description { get; set; }
 
+        [Required]
         public float Price { get; set; }
 
     }

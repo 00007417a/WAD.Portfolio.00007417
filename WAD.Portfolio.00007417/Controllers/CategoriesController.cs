@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WAD.Portfolio._00007417.DAL;
-using WAD.Portfolio._00007417.Models;
+using Portfolio._00007417.DAL.Context;
+using Portfolio._00007417.DAL.DBO;
+using Portfolio._00007417.Repositories;
 
 namespace WAD.Portfolio._00007417.Controllers
 {
@@ -14,25 +15,25 @@ namespace WAD.Portfolio._00007417.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly CgiProductsDbContext _context;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public CategoriesController(CgiProductsDbContext context)
+        public CategoriesController(IRepository<Category> categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         // GET: api/Categories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            return await _context.Categories.ToListAsync();
+            return await _categoryRepository.GetAllAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
 
             if (category == null)
             {
@@ -53,11 +54,14 @@ namespace WAD.Portfolio._00007417.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(category).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _categoryRepository.UpdateAsync(category);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +84,12 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _categoryRepository.AddAsync(category);
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
@@ -90,21 +98,21 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
+
             if (category == null)
             {
                 return NotFound();
             }
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _categoryRepository.DeleteAsync(id);
 
             return category;
         }
 
         private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _categoryRepository.IfExists(id);
         }
     }
 }

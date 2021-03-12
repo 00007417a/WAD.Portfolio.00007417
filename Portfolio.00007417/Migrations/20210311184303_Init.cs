@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WAD.Portfolio._00007417.Migrations
+namespace Portfolio._00007417.DAL.Migrations
 {
     public partial class Init : Migration
     {

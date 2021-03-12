@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WAD.Portfolio._00007417.DAL;
-using WAD.Portfolio._00007417.Models;
+using Portfolio._00007417.DAL.DBO;
+using Portfolio._00007417.Repositories;
 
 namespace WAD.Portfolio._00007417.Controllers
 {
@@ -14,25 +14,25 @@ namespace WAD.Portfolio._00007417.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
-        private readonly CgiProductsDbContext _context;
+        private readonly IRepository<Person> _personRepository;
 
-        public PeopleController(CgiProductsDbContext context)
+        public PeopleController(IRepository<Person> personRepository)
         {
-            _context = context;
+            _personRepository = personRepository;
         }
 
         // GET: api/People
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPerson()
         {
-            return await _context.People.ToListAsync();
+            return await _personRepository.GetAllAsync();
         }
 
         // GET: api/People/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson(int id)
         {
-            var person = await _context.People.FindAsync(id);
+            var person = await _personRepository.GetByIdAsync(id);
 
             if (person == null)
             {
@@ -53,11 +53,14 @@ namespace WAD.Portfolio._00007417.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(person).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _personRepository.UpdateAsync(person);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +83,11 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
-            _context.People.Add(person);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                BadRequest(ModelState);
+            }
+            await _personRepository.AddAsync(person);
 
             return CreatedAtAction("GetPerson", new { id = person.Id }, person);
         }
@@ -90,21 +96,21 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Person>> DeletePerson(int id)
         {
-            var person = await _context.People.FindAsync(id);
+            var person = await _personRepository.GetByIdAsync(id);
+
             if (person == null)
             {
                 return NotFound();
             }
 
-            _context.People.Remove(person);
-            await _context.SaveChangesAsync();
+            await _personRepository.DeleteAsync(id);
 
             return person;
         }
 
         private bool PersonExists(int id)
         {
-            return _context.People.Any(e => e.Id == id);
+            return _personRepository.IfExists(id);
         }
     }
 }
