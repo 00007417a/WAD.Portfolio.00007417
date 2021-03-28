@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Portfolio._00007417.Repositories
+namespace Portfolio._00007417.DAL.Repositories
 {
     public class BaseRepository
     {

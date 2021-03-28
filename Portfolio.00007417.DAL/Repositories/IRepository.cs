@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Portfolio._00007417.Repositories
+namespace Portfolio._00007417.DAL.Repositories
 {
     public interface IRepository<T> where T : class
     {

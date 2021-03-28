@@ -5,10 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Portfolio._00007417.DAL.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Portfolio._00007417.DAL.DBO;
+using Portfolio._00007417.DAL.Repositories;
 
 namespace WAD.Portfolio._00007417
 {
@@ -25,6 +23,9 @@ namespace WAD.Portfolio._00007417
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IRepository<Product>, ProductRepository>();
+            services.AddScoped<IRepository<Category>, CategoryRepository>();
+            services.AddScoped<IRepository<Person>, PersonRepository>();
             services.AddDbContext<CgiProductsDbContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("CgiProducts")

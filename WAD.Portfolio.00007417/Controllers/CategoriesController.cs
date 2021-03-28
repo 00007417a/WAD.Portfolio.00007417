@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Portfolio._00007417.DAL.Context;
 using Portfolio._00007417.DAL.DBO;
-using Portfolio._00007417.Repositories;
+using Portfolio._00007417.DAL.Repositories;
 
 namespace WAD.Portfolio._00007417.Controllers
 {
@@ -24,7 +23,7 @@ namespace WAD.Portfolio._00007417.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
             return await _categoryRepository.GetAllAsync();
         }

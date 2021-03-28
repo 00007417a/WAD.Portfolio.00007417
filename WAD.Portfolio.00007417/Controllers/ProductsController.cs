@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio._00007417.DAL.DBO;
-using Portfolio._00007417.Repositories;
+using Portfolio._00007417.DAL.Repositories;
 
 namespace WAD.Portfolio._00007417.Controllers
 {
@@ -20,7 +20,6 @@ namespace WAD.Portfolio._00007417.Controllers
         {
             _productRepository = productRepository;
         }
-
 
         // GET: api/Products
         [HttpGet]
@@ -84,12 +83,6 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await _productRepository.AddAsync(product);
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);

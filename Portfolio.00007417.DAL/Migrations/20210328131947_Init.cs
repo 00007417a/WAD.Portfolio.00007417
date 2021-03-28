@@ -26,13 +26,13 @@ namespace Portfolio._00007417.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     ProfessionalInformation = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    EmailAddress = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    EmailAddress = table.Column<string>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: false),
                     Website = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -46,10 +46,10 @@ namespace Portfolio._00007417.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(nullable: true),
+                    ProductName = table.Column<string>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true),
                     PersonId = table.Column<int>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
                     Price = table.Column<float>(nullable: false)
                 },
                 constraints: table =>

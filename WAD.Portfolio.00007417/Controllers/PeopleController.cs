@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio._00007417.DAL.DBO;
-using Portfolio._00007417.Repositories;
+using Portfolio._00007417.DAL.Repositories;
 
 namespace WAD.Portfolio._00007417.Controllers
 {
@@ -23,7 +23,7 @@ namespace WAD.Portfolio._00007417.Controllers
 
         // GET: api/People
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> GetPerson()
+        public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
         {
             return await _personRepository.GetAllAsync();
         }
@@ -85,7 +85,7 @@ namespace WAD.Portfolio._00007417.Controllers
         {
             if (!ModelState.IsValid)
             {
-                BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
             await _personRepository.AddAsync(person);
 
@@ -97,7 +97,6 @@ namespace WAD.Portfolio._00007417.Controllers
         public async Task<ActionResult<Person>> DeletePerson(int id)
         {
             var person = await _personRepository.GetByIdAsync(id);
-
             if (person == null)
             {
                 return NotFound();

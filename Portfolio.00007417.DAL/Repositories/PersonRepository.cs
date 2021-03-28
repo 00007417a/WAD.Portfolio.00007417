@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Portfolio._00007417.Repositories
+namespace Portfolio._00007417.DAL.Repositories
 {
     public class PersonRepository: BaseRepository, IRepository<Person>
     {
