@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Portfolio._00007417.DAL.DBO
 
         [Required]
         [MinLength(2)]
+        [DisplayName("Product Name")]
         public string ProductName { get; set; }
 
         public int? CategoryId { get; set; }

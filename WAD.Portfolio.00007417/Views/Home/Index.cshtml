@@ -6,3 +6,33 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div id="productsContainer" ng-app="categoriesApp">
+    <div ng-controller="categoriesController">
+        <table class="table">
+            <tr ng-repeat="category in categories">
+                <td>
+                    {{category.id}}
+                </td>
+                <td>
+                    {{category.categoryTypes}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js" type="text/javascript"></script>
+    <script>
+        angular.module('categoriesApp', [])
+            .controller('categoriesController', function ($scope, $http) {
+                $http.get("@Url.Action("GetCategories", "Categories")").then(function (response) {
+                    $scope.categories = response.data;
+                });
+            });
+
+    </script>
+
+}
