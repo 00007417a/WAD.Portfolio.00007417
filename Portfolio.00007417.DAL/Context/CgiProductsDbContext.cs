@@ -17,8 +17,6 @@ namespace Portfolio._00007417.DAL.Context
 
         public virtual DbSet<Product> Products { get; set; }
 
-        public virtual DbSet<Person> People { get; set; }
-
         public virtual DbSet<Category> Categories { get; set; }
     }
 }

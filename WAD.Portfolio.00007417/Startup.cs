@@ -23,9 +23,13 @@ namespace WAD.Portfolio._00007417
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // The method is used to catch System.Text.Json.JsonException: A possible object cycle was detected which is not supported
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            // Adding reference to models in repositories
             services.AddScoped<IRepository<Product>, ProductRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
-            services.AddScoped<IRepository<Person>, PersonRepository>();
             services.AddDbContext<CgiProductsDbContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("CgiProducts")

@@ -13,31 +13,11 @@ namespace Portfolio._00007417.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryTypes = table.Column<int>(nullable: false)
+                    CategoryName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "People",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    ProfessionalInformation = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: false),
-                    EmailAddress = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: false),
-                    Website = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_People", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +28,7 @@ namespace Portfolio._00007417.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true),
-                    PersonId = table.Column<int>(nullable: true),
+                    PublishedDate = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Price = table.Column<float>(nullable: false)
                 },
@@ -61,23 +41,12 @@ namespace Portfolio._00007417.DAL.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_People_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "People",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_PersonId",
-                table: "Products",
-                column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -87,9 +56,6 @@ namespace Portfolio._00007417.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "People");
         }
     }
 }

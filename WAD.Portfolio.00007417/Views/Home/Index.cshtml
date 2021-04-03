@@ -2,37 +2,100 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div>*@
 
-<div id="productsContainer" ng-app="categoriesApp">
-    <div ng-controller="categoriesController">
-        <table class="table">
-            <tr ng-repeat="category in categories">
-                <td>
-                    {{category.id}}
-                </td>
-                <td>
-                    {{category.categoryTypes}}
-                </td>
-            </tr>
-        </table>
+<div ng-app="ProductsSPA">
+    <div ng-view>
+
     </div>
-
 </div>
+
 
 @section Scripts{
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js" type="text/javascript"></script>
-    <script>
-        angular.module('categoriesApp', [])
-            .controller('categoriesController', function ($scope, $http) {
-                $http.get("@Url.Action("GetCategories", "Categories")").then(function (response) {
-                    $scope.categories = response.data;
-                });
-            });
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        angular
+            .module('ProductsSPA', ['ngRoute'])
+            .config(function ($routeProvider) {
+                $routeProvider
+                    .when('/',
+                        {
+                            templateUrl: 'pages/index.html',
+                            controller: 'IndexController'
+                        })
+                    .when('/products',
+                        {
+                            templateUrl: 'pages/products.html',
+                            controller: 'ProductsController'
+                        })
+                    .when('/categories',
+                        {
+                            templateUrl: 'pages/categories.html',
+                            controller: 'CategoriesController'
+                        })
+                    .when('/addCategory',
+                        {
+                            templateUrl: 'pages/addEditCategory.html',
+                            controller: 'AddCategoryController'
+                        })
+                    .otherwise({
+                        redirectTo: '/'
+                    });
+            })
+            .controller('IndexController', ['$scope', '$http', function ($scope, $http) {
+                $scope.message = 'Welcome text';
+            }])
+            .controller('ProductsController', ['$scope', '$http', function ($scope, $http) {
+                $scope.products = [];
+                $scope.categories = [];
+
+                $scope.selectedCategory = null;
+
+                $http.get('@Url.Action("GetCategories", "Categories")')
+                    .then(function (response) {
+                        $scope.categories = response.data;
+                    });
+
+                $scope.GetProducts = function () {
+                    var url = '@Url.Action("GetProducts", "Products")';
+                    if ($scope.selectedCategory) {
+                        url += '?categoryId='+$scope.selectedCategory.id;
+                    }
+                    $http.get(url)
+                        .then(function (response) {
+                            $scope.products = response.data;
+                        });
+                };
+
+                $scope.GetProducts(null);
+
+            }])
+            .controller('CategoriesController', ['$scope', '$http', function ($scope, $http) {
+                $scope.categories = [];
+                $http.get('@Url.Action("GetCategories", "Categories")')
+                    .then(function (response) {
+                        $scope.categories = response.data;
+                    });
+            }])
+            .controller('AddCategoryController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+                $scope.categories =
+                {
+                    id : 0,
+                    name : ''
+                };
+                $scope.SaveCategory = function()
+                {
+                    $http.post('@Url.Action("GetCategories", "Categories")', $scope.category)
+                        .then()
+                        {
+                            $location.path('/categories');
+                        }
+                }
+            }]);
 
     </script>
-
 }

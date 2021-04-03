@@ -42,7 +42,7 @@ namespace Portfolio._00007417.DAL.Repositories
 
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include("ProductCategory").ToListAsync();
         }
 
         public bool IfExists(int id)

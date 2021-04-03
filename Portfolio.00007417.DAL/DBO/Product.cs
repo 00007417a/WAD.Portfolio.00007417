@@ -21,9 +21,7 @@ namespace Portfolio._00007417.DAL.DBO
 
         public virtual Category ProductCategory { get; set; }
 
-        public int? PersonId { get; set; }
-
-        public virtual Person Person { get; set; }
+        public DateTime PublishedDate { get; set; }
 
         [Required]
         [MinLength(3)]

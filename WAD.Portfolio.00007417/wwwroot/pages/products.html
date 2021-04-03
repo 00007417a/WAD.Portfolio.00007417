@@ -1,0 +1,31 @@
+﻿<div class="container">
+    <select class="form-control"
+            ng-options="category as category.categoryName for category in categories" 
+            ng-model="selectedCategory" ng-change="GetProducts()">
+        <option value="">---Please Selece---</option>
+
+    </select>
+
+</div>
+
+<table class="table">
+    <tbody>
+        <tr ng-repeat="product in products">
+            <td>
+                {{product.productName}}
+            </td>
+            <td>
+                {{product.description}}
+            </td>
+            <td>
+                {{product.productCategory.categoryName}}
+            </td>
+            <td>
+                {{product.publishedDate}}
+            </td>
+            <td>
+                {{product.price}}
+            </td>
+        </tr>
+    </tbody>
+</table>

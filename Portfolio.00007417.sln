@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAD.Portfolio.00007417", "WAD.Portfolio.00007417\WAD.Portfolio.00007417.csproj", "{D8986D81-4A59-47AE-8E62-3CD2F06604AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.00007417.DAL", "Portfolio.00007417.DAL\Portfolio.00007417.DAL.csproj", "{AFDF5187-8447-4DE5-B650-D888F16675FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.00007417.DAL", "Portfolio.00007417.DAL\Portfolio.00007417.DAL.csproj", "{AFDF5187-8447-4DE5-B650-D888F16675FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

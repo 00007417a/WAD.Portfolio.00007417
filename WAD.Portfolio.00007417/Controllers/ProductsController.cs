@@ -23,9 +23,11 @@ namespace WAD.Portfolio._00007417.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(int? categoryId)
         {
-            return await _productRepository.GetAllAsync();
+            var categories = await _productRepository.GetAllAsync();
+            var result = categories.Where(c => categoryId == null || c.CategoryId == categoryId.Value);
+            return Ok(result);
         }
 
         // GET: api/Products/5
@@ -83,8 +85,8 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            product.PublishedDate = DateTime.Now;
             await _productRepository.AddAsync(product);
-
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
