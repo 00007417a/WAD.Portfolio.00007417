@@ -1,13 +1,16 @@
 ﻿<a href="#!/addCategory">Create New Category</a>
-
-<table>
+<table class="table">
     <tbody>
         <tr ng-repeat="category in categories">
             <td>
                 {{category.categoryName}}
             </td>
+            <td>
+                <a href="#!/editCategory/{{category.id}}">Edit</a>
+            </td>
+            <td>
+                <a ng-click="Delete(category)">Delete</a>
+            </td>
         </tr>
-
     </tbody>
-
 </table>

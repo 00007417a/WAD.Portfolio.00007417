@@ -24,11 +24,6 @@
                 $routeProvider
                     .when('/',
                         {
-                            templateUrl: 'pages/index.html',
-                            controller: 'IndexController'
-                        })
-                    .when('/products',
-                        {
                             templateUrl: 'pages/products.html',
                             controller: 'ProductsController'
                         })
@@ -42,13 +37,15 @@
                             templateUrl: 'pages/addEditCategory.html',
                             controller: 'AddCategoryController'
                         })
+                    .when('/editCategory/:categoryId',
+                        {
+                            templateUrl: 'pages/addEditCategory.html',
+                            controller: 'EditCategoryController'
+                        })
                     .otherwise({
                         redirectTo: '/'
                     });
             })
-            .controller('IndexController', ['$scope', '$http', function ($scope, $http) {
-                $scope.message = 'Welcome text';
-            }])
             .controller('ProductsController', ['$scope', '$http', function ($scope, $http) {
                 $scope.products = [];
                 $scope.categories = [];
@@ -63,7 +60,7 @@
                 $scope.GetProducts = function () {
                     var url = '@Url.Action("GetProducts", "Products")';
                     if ($scope.selectedCategory) {
-                        url += '?categoryId='+$scope.selectedCategory.id;
+                        url += '?categoryId=' + $scope.selectedCategory.id;
                     }
                     $http.get(url)
                         .then(function (response) {
@@ -80,20 +77,47 @@
                     .then(function (response) {
                         $scope.categories = response.data;
                     });
+
+                $scope.Delete = function (category) {
+                    $http.delete('@Url.Action("GetCategories", "Categories")/' + category.id).then(function (response) {
+                            var index = $scope.categories.indexOf(category);
+                            $scope.categories.splice(index, 1);
+                        });
+                }
+
             }])
             .controller('AddCategoryController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-                $scope.categories =
+                $scope.category =
+                {
+                    id: 0,
+                    name: ''
+                };
+                $scope.SaveCategory = function () {
+                    $http.post('@Url.Action("PostCategory", "Categories")', $scope.category)
+                        .then(function (response) {
+                            $location.path('/categories');
+                        })
+                }
+            }])
+            .controller('EditCategoryController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+                $scope.category =
                 {
                     id : 0,
                     name : ''
                 };
+
+                $http.get('@Url.Action("GetCategories", "Categories")/' + $routeParams.categoryId)
+                    .then(function (response) {
+                        $scope.category = response.data;
+                    });
+
                 $scope.SaveCategory = function()
                 {
-                    $http.post('@Url.Action("GetCategories", "Categories")', $scope.category)
-                        .then()
+                    $http.put('@Url.Action("GetCategories", "Categories")/' + $routeParams.categoryId, $scope.category)
+                        .then(function(response)
                         {
                             $location.path('/categories');
-                        }
+                        })
                 }
             }]);
 
