@@ -2,10 +2,10 @@
     <select class="form-control"
             ng-options="category as category.categoryName for category in categories" 
             ng-model="selectedCategory" ng-change="GetProducts()">
-        <option value="">---Please Select---</option>
+        <option value="">Filter by category</option>
     </select>
 </div>
-
+<a href="#!/addProduct">Create New Product</a>
 <table class="table">
     <tbody>
         <tr ng-repeat="product in products">
@@ -22,8 +22,14 @@
                 {{product.publishedDate}}
             </td>
             <td>
-                {{product.price}}
+                <p>${{product.price}}</p>
             </td>
+            <td>
+                <span class="btn btn-warning"><a href="#!/editProduct/{{product.id}}">Edit</a></span>
+            </td>
+            <td>
+                <span class="btn btn-danger"><a ng-click="Delete(product)">Delete</a></span>
+</td>
         </tr>
     </tbody>
 </table>

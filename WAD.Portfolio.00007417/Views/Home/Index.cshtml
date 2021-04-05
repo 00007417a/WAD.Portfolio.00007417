@@ -37,10 +37,20 @@
                             templateUrl: 'pages/addEditCategory.html',
                             controller: 'AddCategoryController'
                         })
+                    .when('/addProduct',
+                        {
+                            templateUrl: 'pages/addEditProduct.html',
+                            controller: 'AddProductController'
+                        })
                     .when('/editCategory/:categoryId',
                         {
                             templateUrl: 'pages/addEditCategory.html',
                             controller: 'EditCategoryController'
+                        })
+                    .when('/editProduct/:productId',
+                        {
+                            templateUrl: 'pages/addEditProduct.html',
+                            controller: 'EditProductController'
                         })
                     .otherwise({
                         redirectTo: '/'
@@ -57,6 +67,13 @@
                         $scope.categories = response.data;
                     });
 
+                $scope.Delete = function (product) {
+                    $http.delete('@Url.Action("GetProducts", "Products")/' + product.id).then(function (response) {
+                            var index = $scope.products.indexOf(product);
+                            $scope.products.splice(index, 1);
+                        });
+                }
+
                 $scope.GetProducts = function () {
                     var url = '@Url.Action("GetProducts", "Products")';
                     if ($scope.selectedCategory) {
@@ -70,6 +87,62 @@
 
                 $scope.GetProducts(null);
 
+            }])
+            .controller('AddProductController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+                $scope.product =
+                {
+                    id: 0,
+                    productName: '',
+                    categoryId: null,
+                    description: '',
+                    price: null
+                };
+                $scope.categories = [];
+
+                $http.get('@Url.Action("GetCategories", "Categories")')
+                    .then(function (response)
+                    {
+                        $scope.categories = response.data
+                    });
+
+                $scope.SaveProduct = function () {
+                    $http.post('@Url.Action("PostProduct", "Products")', $scope.product)
+                        .then(function (response) {
+                            $location.path('/products');
+                        })
+                }
+            }])
+            .controller('EditProductController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+                $scope.product =
+                {
+                    id: 0,
+                    productName: '',
+                    categoryId: null,
+                    description: '',
+                    price: null
+                };
+                $scope.categories = [];
+
+                $http.get('@Url.Action("GetCategories", "Categories")')
+                    .then(function (response)
+                    {
+                        $scope.categories = response.data
+                    });
+
+
+                $http.get('@Url.Action("GetProducts", "Products")/' + $routeParams.productId)
+                    .then(function (response) {
+                        $scope.product = response.data;
+                    });
+
+                $scope.SaveProduct = function()
+                {
+                    $http.put('@Url.Action("GetProducts", "Products")/' + $routeParams.productId, $scope.product)
+                        .then(function(response)
+                        {
+                            $location.path('/products');
+                        })
+                }
             }])
             .controller('CategoriesController', ['$scope', '$http', function ($scope, $http) {
                 $scope.categories = [];

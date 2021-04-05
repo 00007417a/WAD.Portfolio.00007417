@@ -6,11 +6,11 @@
                 {{category.categoryName}}
             </td>
             <td>
-                <a href="#!/editCategory/{{category.id}}">Edit</a>
+                <span class="btn btn-warning"><a href="#!/editCategory/{{category.id}}">Edit</a></span>
             </td>
             <td>
-                <a ng-click="Delete(category)">Delete</a>
-            </td>
+                <span class="btn btn-danger"><a ng-click="Delete(category)">Delete</a></span>
+</td>
         </tr>
     </tbody>
 </table>
