@@ -11,7 +11,15 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
-
+canvas {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    margin: 0 auto 0 auto;
+    left: 0;
+    right: 0;
+    display: block;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -59,8 +67,8 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 .footer {
   position: absolute;
@@ -68,4 +76,8 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+ul li {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
 }

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Portfolio.00007417.DAL\Portfolio.00007417.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

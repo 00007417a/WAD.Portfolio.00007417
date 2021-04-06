@@ -1,11 +1,14 @@
-﻿<div class="container">
+﻿
+<div class="container text-center">
+    <canvas id="360viewer" class="justify-content-center" width="600" height="350"></canvas>
+</div>
+<div class="container">
     <select class="form-control"
-            ng-options="category as category.categoryName for category in categories" 
+            ng-options="category as category.categoryName for category in categories"
             ng-model="selectedCategory" ng-change="GetProducts()">
         <option value="">Filter by category</option>
     </select>
 </div>
-<a href="#!/addProduct">Create New Product</a>
 <table class="table">
     <tbody>
         <tr ng-repeat="product in products">
@@ -19,7 +22,8 @@
                 {{product.productCategory.categoryName}}
             </td>
             <td>
-                {{product.publishedDate}}
+                <!--The method is used to format the date-->
+                <p ng-bind="product.publishedDate | date:'dd.MM.yyyy'"></p>
             </td>
             <td>
                 <p>${{product.price}}</p>
@@ -29,7 +33,7 @@
             </td>
             <td>
                 <span class="btn btn-danger"><a ng-click="Delete(product)">Delete</a></span>
-</td>
+            </td>
         </tr>
     </tbody>
 </table>
