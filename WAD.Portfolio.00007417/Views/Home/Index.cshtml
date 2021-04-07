@@ -84,6 +84,7 @@
 
             }])
             .controller('AddProductController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+                $scope.message = "";
                 $scope.product =
                 {
                     id: 0,
@@ -104,7 +105,9 @@
                     $http.post('@Url.Action("PostProduct", "Products")', $scope.product)
                         .then(function (response) {
                             $location.path('/products');
-                        })
+                        }, function (error) {
+                                $scope.message = error.data;
+                            })
                 }
             }])
             .controller('EditProductController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {

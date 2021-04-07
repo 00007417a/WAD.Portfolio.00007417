@@ -1,16 +1,19 @@
 ﻿
-<div class="container text-center">
-    <canvas id="360viewer" class="justify-content-center" width="600" height="350"></canvas>
-</div>
-<div class="container">
-    <select class="form-control"
-            ng-options="category as category.categoryName for category in categories"
-            ng-model="selectedCategory" ng-change="GetProducts()">
-        <option value="">Filter by category</option>
-    </select>
-</div>
-<table class="table">
+<select class="form-control form-select form-select-lg mb-3"
+        ng-options="category as category.categoryName for category in categories"
+        ng-model="selectedCategory" ng-change="GetProducts()">
+        <option class="option-category" value="">Filter by category</option>
+</select>
+<table class="table table-bordered shadow">
     <tbody>
+        <tr class="table-header text-center">
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Date Added</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
         <tr ng-repeat="product in products">
             <td>
                 {{product.productName}}
@@ -18,22 +21,29 @@
             <td>
                 {{product.description}}
             </td>
-            <td>
+            <td class="text-center">
                 {{product.productCategory.categoryName}}
             </td>
-            <td>
+            <td class="text-center">
                 <!--The method is used to format the date-->
-                <p ng-bind="product.publishedDate | date:'dd.MM.yyyy'"></p>
+                <p ng-bind="product.publishedDate | date:'yyyy.MM.dd'"></p>
             </td>
-            <td>
+            <td class="text-center">
                 <p>${{product.price}}</p>
             </td>
-            <td>
-                <span class="btn btn-warning"><a href="#!/editProduct/{{product.id}}">Edit</a></span>
-            </td>
-            <td>
-                <span class="btn btn-danger"><a ng-click="Delete(product)">Delete</a></span>
+            <td class="text-center">
+                <a href="#!/editProduct/{{product.id}}"><img src="../images/edit.png" width="20" alt="edit button" /></a>
+                <a ng-click="Delete(product)"><img src="../images/delete.png" alt="delete button" width="20" /></a>
             </td>
         </tr>
     </tbody>
 </table>
+<!--<div class="" ng-repeat="product in products">
+    <div class="card justify-content-center">
+        
+        <h1>{{product.productName}}</h1>
+        <p class="price">${{product.price}}</p>
+        <p>{{product.description}}</p>
+        <p><button class="btn btn-primary">Add to Cart</button></p>
+    </div>
+</div>-->

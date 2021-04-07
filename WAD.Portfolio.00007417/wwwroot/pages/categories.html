@@ -1,16 +1,18 @@
-﻿<a href="#!/addCategory">Create New Category</a>
-<table class="table">
+﻿<a id="create-category" href="#!/addCategory"><span class="container btn btn-secondary">Create New Category</span></a>
+<table class="table shadow table-bordered text-center">
     <tbody>
+        <tr class="table-header">
+            <th>Category Name</th>
+            <th>Actions</th>
+        </tr>
         <tr ng-repeat="category in categories">
             <td>
                 {{category.categoryName}}
             </td>
             <td>
-                <span class="btn btn-warning"><a href="#!/editCategory/{{category.id}}">Edit</a></span>
+                <a href="#!/editCategory/{{category.id}}"><img src="../images/edit.png" width="20" alt="edit button" /></a>
+                <a ng-click="Delete(category)"><img src="../images/delete.png" alt="delete button" width="20" /></a>
             </td>
-            <td>
-                <span class="btn btn-danger"><a ng-click="Delete(category)">Delete</a></span>
-</td>
         </tr>
     </tbody>
 </table>
