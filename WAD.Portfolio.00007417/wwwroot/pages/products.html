@@ -1,8 +1,12 @@
-﻿
+﻿<!-- header in the product list page -->
+<div class="container">
+    <canvas id="360viewer" class="justify-content-center" width="500" height="350"></canvas>
+</div>
+
 <select class="form-control form-select form-select-lg mb-3"
         ng-options="category as category.categoryName for category in categories"
         ng-model="selectedCategory" ng-change="GetProducts()">
-        <option class="option-category" value="">Filter by category</option>
+    <option class="option-category" value="">Filter by category</option>
 </select>
 <table class="table table-bordered shadow">
     <tbody>
@@ -38,12 +42,5 @@
         </tr>
     </tbody>
 </table>
-<!--<div class="" ng-repeat="product in products">
-    <div class="card justify-content-center">
-        
-        <h1>{{product.productName}}</h1>
-        <p class="price">${{product.price}}</p>
-        <p>{{product.description}}</p>
-        <p><button class="btn btn-primary">Add to Cart</button></p>
-    </div>
-</div>-->
+<!-- initialization of a 360 header -->
+<script type="text/javascript">init()</script>

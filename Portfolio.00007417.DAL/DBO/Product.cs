@@ -12,22 +12,23 @@ namespace Portfolio._00007417.DAL.DBO
         
         public int Id { get; set; }
 
-        [Required]
-        [MinLength(2)]
+        [Required(ErrorMessage = "Product name cannot be empty")]
+        [MinLength(2, ErrorMessage = "Product name should have at least 2 characters")]
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public virtual Category ProductCategory { get; set; }
 
         public DateTime PublishedDate { get; set; }
 
-        [Required]
-        [MinLength(3)]
+        [Required(ErrorMessage = "Description cannot be empty")]
+        [MinLength(3, ErrorMessage = "Description should have at least 3 characters")]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Price cannot be empty")]
+        [Range(0, int.MaxValue, ErrorMessage = "Price cannot be negative value")]
         public float Price { get; set; }
 
     }

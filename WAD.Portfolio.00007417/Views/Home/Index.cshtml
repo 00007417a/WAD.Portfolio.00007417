@@ -89,9 +89,9 @@
                 {
                     id: 0,
                     productName: '',
-                    categoryId: null,
+                    categoryId: '',
                     description: '',
-                    price: null
+                    price: ''
                 };
                 $scope.categories = [];
 
@@ -106,18 +106,19 @@
                         .then(function (response) {
                             $location.path('/products');
                         }, function (error) {
-                                $scope.message = error.data;
+                                $scope.message = error.data.title;
                             })
                 }
             }])
             .controller('EditProductController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+                $scope.message = "";
                 $scope.product =
                 {
                     id: 0,
                     productName: '',
-                    categoryId: null,
+                    categoryId: '',
                     description: '',
-                    price: null
+                    price: ''
                 };
                 $scope.categories = [];
 
@@ -139,6 +140,8 @@
                         .then(function(response)
                         {
                             $location.path('/products');
+                        },  function (error) {
+                            $scope.message = error.data.title;
                         })
                 }
             }])
@@ -158,6 +161,7 @@
 
             }])
             .controller('AddCategoryController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+                $scope.message = "";
                 $scope.category =
                 {
                     id: 0,
@@ -167,10 +171,13 @@
                     $http.post('@Url.Action("PostCategory", "Categories")', $scope.category)
                         .then(function (response) {
                             $location.path('/categories');
+                        }, function (error) {
+                            $scope.message = error.data.title;
                         })
                 }
             }])
             .controller('EditCategoryController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+                $scope.message = "";
                 $scope.category =
                 {
                     id : 0,
@@ -188,6 +195,8 @@
                         .then(function(response)
                         {
                             $location.path('/categories');
+                        },  function (error) {
+                            $scope.message = error.data.title;
                         })
                 }
             }]);

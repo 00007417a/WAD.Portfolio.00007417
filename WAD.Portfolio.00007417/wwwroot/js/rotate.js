@@ -141,9 +141,6 @@ function init() {
 
   // TICKER
   createjs.Ticker.addEventListener("tick", handleTick);
-  createjs.Ticker.setFPS(30);
+  createjs.Ticker.setFPS(24);
   createjs.Ticker.useRAF = true;
 }
-
-// Init
-window.addEventListener('load', init, false);

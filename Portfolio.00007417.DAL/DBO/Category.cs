@@ -12,6 +12,7 @@ namespace Portfolio._00007417.DAL.DBO
 
         [DisplayName("Category Name")]
         [Required(ErrorMessage = "The field cannot be empty")]
+        [MinLength(2, ErrorMessage = "Category name should have at least 2 characters")]
         public string CategoryName { get; set; }
 
         [JsonIgnore]
