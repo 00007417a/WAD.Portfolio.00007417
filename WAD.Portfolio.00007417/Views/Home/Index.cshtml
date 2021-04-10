@@ -89,9 +89,9 @@
                 {
                     id: 0,
                     productName: '',
-                    categoryId: '',
+                    categoryId: null,
                     description: '',
-                    price: ''
+                    price: null
                 };
                 $scope.categories = [];
 
@@ -106,7 +106,7 @@
                         .then(function (response) {
                             $location.path('/products');
                         }, function (error) {
-                                $scope.message = error.data.title;
+                                $scope.message = "Check if all required fields are not empty and have at least 2 characters";
                             })
                 }
             }])
@@ -116,9 +116,9 @@
                 {
                     id: 0,
                     productName: '',
-                    categoryId: '',
+                    categoryId: null,
                     description: '',
-                    price: ''
+                    price: null
                 };
                 $scope.categories = [];
 
@@ -141,7 +141,7 @@
                         {
                             $location.path('/products');
                         },  function (error) {
-                            $scope.message = error.data.title;
+                                $scope.message = "Check if all required fields are not empty and have at least 2 characters";
                         })
                 }
             }])
@@ -172,7 +172,7 @@
                         .then(function (response) {
                             $location.path('/categories');
                         }, function (error) {
-                            $scope.message = error.data.title;
+                                $scope.message = "Check if name field is not empty and has at least 2 characters";
                         })
                 }
             }])
@@ -196,7 +196,7 @@
                         {
                             $location.path('/categories');
                         },  function (error) {
-                            $scope.message = error.data.title;
+                                $scope.message = "Check if name field is not empty and has at least 2 characters";
                         })
                 }
             }]);
