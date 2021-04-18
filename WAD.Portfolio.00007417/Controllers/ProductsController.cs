@@ -12,20 +12,19 @@ namespace WAD.Portfolio._00007417.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : GenericController<Product>
     {
-        private readonly IRepository<Product> _productRepository;
-
-        public ProductsController(IRepository<Product> productRepository)
+        public ProductsController(IRepository<Product> repository) : base(repository)
         {
-            _productRepository = productRepository;
+
         }
 
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts(int? categoryId)
         {
-            var categories = await _productRepository.GetAllAsync();
+            // gets all products in the table
+            var categories = await _repository.GetAllAsync();
             var result = categories.Where(c => categoryId == null || c.CategoryId == categoryId.Value);
             return Ok(result);
         }
@@ -34,13 +33,13 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _repository.GetByIdAsync(id);
 
             if (product == null)
             {
                 return NotFound();
             }
-
+            // returns a particular product
             return product;
         }
 
@@ -55,6 +54,7 @@ namespace WAD.Portfolio._00007417.Controllers
                 return BadRequest();
             }
 
+            // Validation for editing a product
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -62,11 +62,12 @@ namespace WAD.Portfolio._00007417.Controllers
 
             try
             {
-                await _productRepository.UpdateAsync(product);
+                await _repository.UpdateAsync(product);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                // if the product does not exists it will throw an error
+                if (!_repository.IfExists(id))
                 {
                     return NotFound();
                 }
@@ -85,8 +86,9 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            // published date will be automatically generated when a user posts a new product
             product.PublishedDate = DateTime.Now;
-            await _productRepository.AddAsync(product);
+            await _repository.AddAsync(product);
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
@@ -94,20 +96,16 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _repository.GetByIdAsync(id);
+
             if (product == null)
             {
                 return NotFound();
             }
 
-            await _productRepository.DeleteAsync(id);
+            await _repository.DeleteAsync(id);
 
             return product;
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _productRepository.IfExists(id);
         }
     }
 }

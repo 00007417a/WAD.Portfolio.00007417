@@ -9,7 +9,8 @@ namespace Portfolio._00007417.DAL.DBO
 {
     public class Product
     {
-        
+        #region Properties
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Product name cannot be empty")]
@@ -17,6 +18,7 @@ namespace Portfolio._00007417.DAL.DBO
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
 
+        // category id cannot be empty
         public int CategoryId { get; set; }
 
         public virtual Category ProductCategory { get; set; }
@@ -31,5 +33,6 @@ namespace Portfolio._00007417.DAL.DBO
         [Range(0, int.MaxValue, ErrorMessage = "Price cannot be negative value")]
         public float Price { get; set; }
 
+        #endregion Properties
     }
 }

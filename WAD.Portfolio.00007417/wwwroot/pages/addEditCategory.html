@@ -1,12 +1,15 @@
-﻿<p class="text-center text-danger">{{message}}</p>
+﻿<!-- displays an error message-->
+<p class="text-center text-danger">{{message}}</p>
 <div class="row justify-content-center">
     <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label"></label>
-                    <input ng-model="category.categoryName" type="text" placeholder="Name" class="form-control"/>
-                </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-dark btn-lg btn-block" ng-click="SaveCategory()"/>
-            </div>
+        <div class="form-group">
+            <label for="Name" class="control-label"></label>
+            <!--accepts name value of a category-->
+            <input ng-model="category.categoryName" type="text" placeholder="Name" class="form-control" />
+        </div>
+        <!-- calls the method save from controller using saveProduct() method-->
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-dark btn-lg btn-block" ng-click="SaveCategory()" />
+        </div>
     </div>
 </div>

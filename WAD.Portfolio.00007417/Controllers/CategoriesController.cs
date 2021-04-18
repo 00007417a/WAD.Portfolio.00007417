@@ -12,27 +12,25 @@ namespace WAD.Portfolio._00007417.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : GenericController<Category>
     {
-        private readonly IRepository<Category> _categoryRepository;
-
-        public CategoriesController(IRepository<Category> categoryRepository)
+        public CategoriesController(IRepository<Category> repository) : base(repository)
         {
-            _categoryRepository = categoryRepository;
+
         }
 
         // GET: api/Categories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _categoryRepository.GetAllAsync();
+            return await _repository.GetAllAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
+            var category = await _repository.GetByIdAsync(id);
 
             if (category == null)
             {
@@ -53,6 +51,7 @@ namespace WAD.Portfolio._00007417.Controllers
                 return BadRequest();
             }
 
+            // validation for editing a category
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -60,11 +59,11 @@ namespace WAD.Portfolio._00007417.Controllers
 
             try
             {
-                await _categoryRepository.UpdateAsync(category);
+                await _repository.UpdateAsync(category);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!_repository.IfExists(id))
                 {
                     return NotFound();
                 }
@@ -88,7 +87,7 @@ namespace WAD.Portfolio._00007417.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _categoryRepository.AddAsync(category);
+            await _repository.AddAsync(category);
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
@@ -97,21 +96,16 @@ namespace WAD.Portfolio._00007417.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> DeleteCategory(int id)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
+            var category = await _repository.GetByIdAsync(id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            await _categoryRepository.DeleteAsync(id);
+            await _repository.DeleteAsync(id);
 
             return category;
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _categoryRepository.IfExists(id);
         }
     }
 }

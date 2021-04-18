@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Portfolio._00007417.DAL.Repositories
 {
-    public class BaseRepository
+    // the abstract class will be inherited by repositories
+    // this method is used to apply SRP
+    public abstract class BaseRepository
     {
         protected readonly CgiProductsDbContext _context;
+
         protected BaseRepository(CgiProductsDbContext context)
         {
             _context = context;

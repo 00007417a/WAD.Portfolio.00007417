@@ -7,7 +7,7 @@ namespace Portfolio._00007417.DAL.DBO
 {
     public class Category
     {
-        
+        #region Properties
         public int Id { get; set; }
 
         [DisplayName("Category Name")]
@@ -17,5 +17,6 @@ namespace Portfolio._00007417.DAL.DBO
 
         [JsonIgnore]
         public virtual ICollection<Product> Products { get; set; }
+        #endregion Properties
     }
 }

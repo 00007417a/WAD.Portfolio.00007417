@@ -1,5 +1,6 @@
 ﻿var stage;
 
+// method for initializing a viewer
 function init() {
   var canvas = document.getElementById("360viewer");
   if (!canvas || !canvas.getContext) return;
@@ -7,8 +8,9 @@ function init() {
   stage = new createjs.Stage(canvas);
   stage.enableMouseOver(true);
   stage.mouseMoveOutside = true;
-  createjs.Touch.enable(stage);
+    createjs.Touch.enable(stage);
 
+// array of string of images
   var imgList = [
       "../images/360/16.jpg",
       "../images/360/1.jpg",
@@ -27,7 +29,8 @@ function init() {
       "../images/360/14.jpg",
       "../images/360/15.jpg"
 
-  ];
+    ];
+
   var images = [],
     loaded = 0,
     currentFrame = 0,
@@ -39,11 +42,6 @@ function init() {
 
   var bmp = new createjs.Bitmap();
   stage.addChild(bmp);
-
-  // var myTxt = new createjs.Text("360 prototype", '13px Roboto', "#E81280");
-  // myTxt.x = myTxt.y =0;
-  // myTxt.alpha = 0.5;
-  // stage.addChild(myTxt);   
 
   function load360Image() {
     var img = new Image();
@@ -63,11 +61,6 @@ function init() {
 
   function start360() {
     document.body.style.cursor = 'none';
-
-    // 360 icon
-    // var iconImage = new Image();
-    // iconImage.src = "http://jsrun.it/assets/y/n/D/c/ynDcT.png";
-    // iconImage.onload = iconLoaded;        
 
     // update-draw
     update360(0);
@@ -139,7 +132,7 @@ function init() {
   document.body.style.cursor = 'progress';
   load360Image();
 
-  // TICKER
+  // rotation speed 
   createjs.Ticker.addEventListener("tick", handleTick);
   createjs.Ticker.setFPS(24);
   createjs.Ticker.useRAF = true;

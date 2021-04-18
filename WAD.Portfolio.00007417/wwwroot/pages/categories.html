@@ -5,12 +5,14 @@
             <th>Category Name</th>
             <th>Actions</th>
         </tr>
+        <!-- ng repeat is used insead of foreach. this method will go through all the values that the table has and shows it to a user-->
         <tr ng-repeat="category in categories">
             <td>
                 {{category.categoryName}}
             </td>
             <td>
                 <a href="#!/editCategory/{{category.id}}"><img src="../images/edit.png" width="20" alt="edit button" /></a>
+                <!-- delete method for category -->
                 <a ng-click="Delete(category)"><img src="../images/delete.png" alt="delete button" width="20" /></a>
             </td>
         </tr>
